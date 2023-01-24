@@ -19,7 +19,7 @@ Trabalho número 2.
 
 ## Screenshots.
 
-1. ![img1](./img1.jpeg)
+1. ![img1](./img1.png)
 
-2. ![img2](./img2.jpeg)
+2. ![img2](./img2.png)
 
