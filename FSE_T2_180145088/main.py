@@ -6,10 +6,10 @@ import math
 
 from threading import Event, Thread 
 
+from arquivos_auxiliares.I2C import temperaturaAmbiente
 from arquivos_auxiliares.UART import UART
 from arquivos_auxiliares.PID import PID
 from arquivos_auxiliares.forno import Forno
-from arquivos_auxiliares.crc import calcula_CRC
 from arquivos_auxiliares.csv import CSV
 
 class Main():
@@ -21,6 +21,7 @@ class Main():
     uart = UART(port, baudrate, timeout)
     pid = PID()
     forno = Forno()
+    csv = CSV()
 
     tempRef = 0
     tempInterna = 0
@@ -32,7 +33,6 @@ class Main():
     def __init__(self):
         self.usuarioComando()
         self.menu()
-        self.csv = CSV()
 
     def menu(self):
         while(1):
@@ -66,6 +66,7 @@ class Main():
             else:
                 pass
 
+            self.salvaLog()
 
     def usuarioComando(self):
             self.response = 0
@@ -108,15 +109,14 @@ class Main():
         if dados is not None:
             print("Aquecimento desligado")
 
-    def salva_log(self):
+    def salvaLog(self):
         header = ['data', 'ti', 'tr', 'resistor/ventoinha']
         self.csv.escrever(header)
-        
-        while True:
-            dado = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-            linha = [dado, self.tempInterna, self.tempRef, self.pid.controleMin]
-            self.csv.escrever(linha)
-            time.sleep(1)
+
+        dado = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+        linha = [dado, self.tempInterna, self.tempRef, self.pid.controleMin]
+        self.csv.escrever(linha)
+        time.sleep(1)
 
     def fornoFuncionamento(self):
         pidAuxiliar = self.pid.controlePid(self.tempRef, self.tempInterna)  
@@ -136,7 +136,8 @@ class Main():
             self.forno.aquecer(pidAuxiliar)
 
         time.sleep(2)
-    
+
+
     def solicitarTemperaturaInt(self):
         comandoEstado = b'\x01\x23\xc1'
         self.uart.envia(comandoEstado, self.matricula, b'', 7)
