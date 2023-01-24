@@ -9,10 +9,10 @@ class Forno:
         GPIO.setup(portaResistor, GPIO.OUT)
         GPIO.setup(portaVentoinha, GPIO.OUT)
 
-        self.resistor = GPIO.PWM(portaResistor, 1000)
+        self.resistor = GPIO.PWM(portaResistor, 60)
         self.resistor.start(0)
 
-        self.ventoinha = GPIO.PWM(portaVentoinha, 1000)
+        self.ventoinha = GPIO.PWM(portaVentoinha, 60)
         self.ventoinha.start(0)
 
     def aquecer(self, pid):

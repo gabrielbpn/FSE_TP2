@@ -14,6 +14,10 @@ class PID:
     controleMin = -100.0
     controleStd = 0.0
 
+    def pidAtualizaReferencia(referencia_):
+        global referencia
+        referencia = referencia_
+
     def controlePid(self, referencia, saida_medida):
         erro = referencia - saida_medida
         self.erroTotal += erro # Parte do controle integral. Vai acumulando o erro

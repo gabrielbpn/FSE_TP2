@@ -33,7 +33,7 @@ class UART:
             m2 = calcula_CRC(m1, tamanho).to_bytes(2, 'little')
             msg = m1 + m2
             self.serial.write(msg)
-            print('Mensagem enviada 1: {}'.format(msg))
+            #print('Mensagem enviada 1: {}'.format(msg))
         else:
             self.conecta()
 
@@ -49,16 +49,16 @@ class UART:
                 crc16_calculado = calcula_CRC(buffer[0:7], 7).to_bytes(2, 'little')
 
                 if crc16_recebido == crc16_calculado:
-                    print('Mensagem recebida 2: {}'.format(buffer))
+                   # print('Mensagem recebida 2: {}'.format(buffer))
                     return data
                 else:
-                    print('Mensagem recebida 3: {}'.format(buffer))
+                   # print('Mensagem recebida 3: {}'.format(buffer))
                     print('CRC16 invalido')
-                    return None
+                    self.recebe()
             else:
-                print('Mensagem recebida 4: {}'.format(buffer))
-                print('Mensagem no formato incorreto, tamanho: {}'.format(buffer_tam))
-                return None
+               # print('Mensagem recebida 4: {}'.format(buffer))
+               # print('Mensagem no formato incorreto, tamanho: {}'.format(buffer_tam))
+                self.recebe()
         else:
             self.conecta()
             return None
