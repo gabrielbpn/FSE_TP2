@@ -2,6 +2,10 @@
 
 Trabalho número 2.
 
+## Vídeo de apresentação
+
+- https://youtu.be/hSe6R7kc1_U
+
 ## Pré-requisitos para rodar
 
 1. Python 3.6.3 ou superior.
@@ -22,4 +26,3 @@ Trabalho número 2.
 1. ![img1](./imgs/img1.png)
 
 2. ![img2](./imgs/img2.png)
-
